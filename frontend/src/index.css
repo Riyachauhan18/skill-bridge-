@@ -7,3 +7,23 @@ html, body, #root {
 body {
   @apply bg-gray-50 text-gray-900 antialiased;
 }
+
+/* Design system utilities (no @layer needed in Tailwind v4) */
+.sb-container { @apply mx-auto max-w-7xl; }
+.sb-card { @apply bg-white rounded-xl shadow-sm border; }
+.sb-card-pad { @apply p-6 md:p-8; }
+.sb-title { @apply text-2xl font-semibold text-slate-900; }
+.sb-subtle { @apply text-sm text-slate-500; }
+.sb-divider { @apply border-t mt-4; }
+
+.sb-btn { @apply px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition; }
+.sb-btn-ghost { @apply px-4 py-2 rounded-lg border text-slate-700 hover:bg-slate-50 transition; }
+.sb-input { @apply border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none; }
+
+.sb-chip { @apply inline-flex items-center gap-1 px-3 py-1 rounded-full border text-sm; }
+.sb-chip-primary { @apply bg-blue-50 text-blue-700 border-blue-200; }
+
+.sb-table { @apply min-w-full text-sm; }
+.sb-th { @apply text-left px-3 py-2 font-medium text-slate-600 bg-gray-50; }
+.sb-td { @apply px-3 py-2 text-slate-700; }
+.sb-tr { @apply border-t hover:bg-slate-50/60; }

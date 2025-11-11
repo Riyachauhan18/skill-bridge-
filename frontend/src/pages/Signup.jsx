@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Signup() {
   const navigate = useNavigate();
 
   return (
@@ -19,43 +19,52 @@ export default function Login() {
             <div className="w-full max-w-md">
               <div className="bg-white rounded-xl shadow-sm border p-6 md:p-8">
                 <div className="text-center">
-                  <h2 className="text-2xl font-semibold text-slate-900">Welcome Back!</h2>
-                  <p className="mt-1 text-sm text-slate-500">Log in to continue.</p>
+                  <h2 className="text-2xl font-semibold text-slate-900">Create your account</h2>
+                  <p className="mt-1 text-sm text-slate-500">Sign up to get started.</p>
                 </div>
 
                 <form
                   className="mt-6 space-y-4"
                   onSubmit={(e)=>{
                     e.preventDefault();
-                    let role = 'student';
+                    const form = e.currentTarget;
+                    const name = form.elements.namedItem('fullName')?.value || '';
+                    const email = form.elements.namedItem('email')?.value || '';
+                    const rollno = form.elements.namedItem('rollno')?.value || '';
                     try {
-                      const roll = localStorage.getItem('rollno') || '';
-                      const m = roll.match(/^(\d{4})/i);
-                      if (m) {
-                        const year = parseInt(m[1], 10);
-                        role = year >= 2024 ? 'student' : 'admin';
-                      }
+                      localStorage.setItem('fullName', name);
+                      localStorage.setItem('email', email);
+                      localStorage.setItem('rollno', rollno);
                     } catch {}
-                    if (role === 'admin') {
-                      navigate(`/dashboard/admin?role=${role}`);
-                    } else {
-                      navigate(`/dashboard?role=${role}`);
-                    }
+                    navigate('/login');
                   }}
                 >
                   <div>
+                    <label className="block text-sm font-medium text-slate-700">Full Name</label>
+                    <input name="fullName" className="mt-2 sb-input" placeholder="John Doe" />
+                  </div>
+                  <div>
                     <label className="block text-sm font-medium text-slate-700">Email Address</label>
-                    <input type="email" className="mt-2 sb-input" placeholder="you@example.com" />
+                    <input name="email" type="email" className="mt-2 sb-input" placeholder="you@example.com" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700">Roll Number</label>
+                    <input name="rollno" className="mt-2 sb-input" placeholder="e.g., 2024btech053" />
+                    <p className="mt-1 text-xs text-slate-500">Format example: 2024btech053</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700">Password</label>
                     <input type="password" className="mt-2 sb-input" placeholder="••••••••" />
                   </div>
-                  <button type="submit" className="w-full px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">LOGIN</button>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700">Confirm Password</label>
+                    <input type="password" className="mt-2 sb-input" placeholder="••••••••" />
+                  </div>
+                  <button type="submit" className="w-full px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">SIGN UP</button>
                 </form>
 
                 <div className="mt-4 text-sm text-center text-slate-600">
-                  Don’t have an account? <Link to="/signup" className="text-indigo-700 hover:underline">Sign up</Link>
+                  Already have an account? <Link to="/login" className="text-indigo-700 hover:underline">Log in</Link>
                 </div>
               </div>
             </div>
