@@ -5,25 +5,94 @@ html, body, #root {
 }
 
 body {
-  @apply bg-gray-50 text-gray-900 antialiased;
+  @apply bg-slate-100 text-slate-900 antialiased;
 }
 
 /* Design system utilities (no @layer needed in Tailwind v4) */
 .sb-container { @apply mx-auto max-w-7xl; }
-.sb-card { @apply bg-white rounded-xl shadow-sm border; }
+.sb-card { @apply rounded-xl shadow-sm border border-white/10 bg-white/5 backdrop-blur text-white; }
 .sb-card-pad { @apply p-6 md:p-8; }
-.sb-title { @apply text-2xl font-semibold text-slate-900; }
-.sb-subtle { @apply text-sm text-slate-500; }
-.sb-divider { @apply border-t mt-4; }
+.sb-title { @apply text-2xl font-semibold text-amber-300; }
+.sb-subtle { @apply text-sm text-slate-300; }
+.sb-divider { @apply border-t border-white/10 mt-4; }
+.sb-label { @apply block text-sm font-medium; }
 
-.sb-btn { @apply px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition; }
-.sb-btn-ghost { @apply px-4 py-2 rounded-lg border text-slate-700 hover:bg-slate-50 transition; }
-.sb-input { @apply border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-500 outline-none; }
+/* Card headings in dark theme */
+.sb-card h3 { @apply text-amber-300; }
 
-.sb-chip { @apply inline-flex items-center gap-1 px-3 py-1 rounded-full border text-sm; }
-.sb-chip-primary { @apply bg-blue-50 text-blue-700 border-blue-200; }
+.sb-btn { @apply px-4 py-2 rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400 transition border border-amber-300; }
+.sb-btn-ghost { @apply px-4 py-2 rounded-lg border border-white/30 text-white hover:bg-white/10 transition; }
+.sb-btn-ghost-light { @apply px-4 py-2 rounded-lg border border-slate-300 text-slate-900 hover:bg-slate-50 transition; }
+.sb-input { @apply border-2 border-amber-400 bg-white rounded-2xl p-2 w-full focus:ring-2 focus:ring-amber-500 outline-none; }
+.sb-input-light { @apply border-2 border-amber-400 bg-white rounded-2xl focus:ring-2 focus:ring-amber-500 outline-none p-2; }
+
+.sb-chip { @apply inline-flex items-center gap-1 px-3 py-1 rounded-full border text-sm border-white/20 text-white; }
+.sb-chip-primary { @apply bg-amber-500/20 text-amber-300 border-amber-300/40; }
 
 .sb-table { @apply min-w-full text-sm; }
-.sb-th { @apply text-left px-3 py-2 font-medium text-slate-600 bg-gray-50; }
-.sb-td { @apply px-3 py-2 text-slate-700; }
-.sb-tr { @apply border-t hover:bg-slate-50/60; }
+.sb-th { @apply text-left px-3 py-2 font-medium text-slate-300 bg-white/5; }
+.sb-td { @apply px-3 py-2 text-slate-200; }
+.sb-tr { @apply border-t border-white/10 hover:bg-white/5; }
+
+/* Global form field colors: ensure strong black text and darker placeholders */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input[type="password"],
+textarea,
+input,
+select {
+  color: #000000 !important;
+  font-weight: 500;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #666666 !important;
+}
+
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+  color: #666666;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #666666;
+}
+
+/* Custom select styling to match input fields */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #ffffff;
+  border: 1px solid #F4B000;
+  border-radius: 0.75rem; /* ~12px */
+  padding: 0.5rem 2.5rem 0.5rem 0.875rem; /* room for arrow on the right */
+  width: 100%;
+  color: #000000;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7l5 6 5-6' stroke='%23222' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 14px 14px;
+}
+
+select:focus {
+  outline: none;
+  border-color: #F4B000;
+  box-shadow: 0 0 0 2px rgba(244, 176, 0, 0.35);
+}
+
+select option {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+select option:checked,
+select option:hover {
+  background-color: #FFF4D6;
+}

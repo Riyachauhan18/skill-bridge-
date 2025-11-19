@@ -14,8 +14,18 @@ import PS1 from './pages/PS1.jsx'
 import PS2 from './pages/PS2.jsx'
 import Hackathons from './pages/Hackathons.jsx'
 import ResearchWork from './pages/ResearchWork.jsx'
+import Messages from './pages/Messages.jsx'
 import Logout from './pages/Logout.jsx'
 import AdminOverview from './pages/AdminOverview.jsx'
+import MentorFinder from './pages/MentorFinder.jsx'
+
+function AdminMentorRoute() {
+  const role = typeof window !== 'undefined' ? localStorage.getItem('role') : null
+  if (role !== 'admin') {
+    return <Navigate to="/dashboard/overview" replace />
+  }
+  return <MentorFinder />
+}
 
 export default function App() {
   return (
@@ -27,8 +37,11 @@ export default function App() {
       <Route path="/dashboard" element={<Dashboard />}>
         <Route index element={<Navigate to="overview" replace />} />
         <Route path="admin" element={<AdminOverview />} />
+        <Route path="mentor-finder" element={<AdminMentorRoute />} />
         <Route path="overview" element={<Overview />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="messages" element={<Messages />} />
+        <Route path="messages/:roll" element={<Messages />} />
         <Route path="edit-info" element={<EditInformation />} />
         <Route path="skills" element={<Skills />} />
         <Route path="achievements" element={<Achievements />} />

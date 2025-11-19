@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model achievements {
+  achievement_id Int       @id @default(autoincrement())
+  roll_number    String?   @db.VarChar(50)
+  title          String?   @db.VarChar(150)
+  type           String?   @db.VarChar(100)
+  date           DateTime? @db.Date
+
+  @@index([roll_number], map: "roll_number")
+}
+
+model interests {
+  roll_number   String @db.VarChar(50)
+  interest_name String @db.VarChar(100)
+
+  @@id([roll_number, interest_name])
+}
+
+// Messaging between users (student/senior/admin)
+model messages {
+  id         Int      @id @default(autoincrement())
+  from_roll  String   @db.VarChar(50)
+  to_roll    String   @db.VarChar(50)
+  body       String   @db.Text
+  context    String?  @db.VarChar(50)
+  created_at DateTime @default(now())
+  read_at    DateTime?
+}
+
+model notifications {
+  id          Int      @id @default(autoincrement())
+  roll_number String   @db.VarChar(50)
+  type        String   @db.VarChar(50)
+  title       String   @db.VarChar(200)
+  body        String?  @db.VarChar(500)
+  created_at  DateTime @default(now())
+  read_at     DateTime?
+}
+
+model internships {
+  internship_id   Int                 @id @default(autoincrement())
+  roll_number     String?             @db.VarChar(50)
+  company_name    String?             @db.VarChar(150)
+  role            String?             @db.VarChar(100)
+  domain          String?             @db.VarChar(100)
+  duration        String?             @db.VarChar(50)
+  start_date      DateTime?           @db.Date
+  end_date        DateTime?           @db.Date
+  internship_type String?             @db.VarChar(50)
+  status          internships_status? @default(Pending)
+  verified_by     String?             @db.VarChar(50)
+
+  @@index([roll_number], map: "roll_number")
+  @@index([verified_by], map: "verified_by")
+}
+
+model profile {
+  roll_number  String    @id @db.VarChar(50)
+  dob          DateTime? @db.Date
+  gender       String?   @db.VarChar(20)
+  bio          String?   @db.Text
+  degree       String?   @db.VarChar(50)
+  department   String?   @db.VarChar(100)
+  batch_year   Int?      @db.Year
+  passout_year Int?      @db.Year
+  cgpa         Decimal?  @db.Decimal(3, 2)
+  phone        String?   @db.VarChar(20)
+  linkedin_url String?   @db.VarChar(255)
+  github_url   String?   @db.VarChar(255)
+}
+
+model researchhighlights {
+  highlight_id   Int       @id @default(autoincrement())
+  roll_number    String?   @db.VarChar(50)
+  title          String?   @db.VarChar(200)
+  description    String?   @db.Text
+  published_link String?   @db.VarChar(255)
+  date           DateTime? @db.Date
+
+  @@index([roll_number], map: "roll_number")
+}
+
+model softskills {
+  roll_number String @db.VarChar(50)
+  skill_name  String @db.VarChar(100)
+
+  @@id([roll_number, skill_name])
+}
+
+model technicalskills {
+  roll_number String @db.VarChar(50)
+  skill_name  String @db.VarChar(100)
+
+  @@id([roll_number, skill_name])
+}
+
+model users {
+  roll_number   String      @id @db.VarChar(50)
+  full_name     String      @db.VarChar(100)
+  email         String      @unique(map: "email") @db.VarChar(100)
+  password_hash String      @db.VarChar(255)
+  role          users_role? @default(student)
+}
+
+enum users_role {
+  student
+  ta
+  admin
+}
+
+enum internships_status {
+  Pending
+  Approved
+  Rejected
+}
